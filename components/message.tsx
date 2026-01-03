@@ -1,6 +1,7 @@
 "use client";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import equal from "fast-deep-equal";
+import Image from "next/image";
 import { memo, useState } from "react";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
@@ -17,12 +18,12 @@ import {
   ToolInput,
   ToolOutput,
 } from "./elements/tool";
-import { SparklesIcon } from "./icons";
 import { MessageActions } from "./message-actions";
 import { MessageEditor } from "./message-editor";
 import { MessageReasoning } from "./message-reasoning";
 import { PreviewAttachment } from "./preview-attachment";
 import { Weather } from "./weather";
+import iconSvg from "@/app/icon.svg";
 
 const PurePreviewMessage = ({
   addToolApprovalResponse,
@@ -66,8 +67,14 @@ const PurePreviewMessage = ({
         })}
       >
         {message.role === "assistant" && (
-          <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-md ring-2 ring-purple-200 dark:ring-purple-900">
-            <SparklesIcon size={14} />
+          <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-white shadow-md ring-2 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700">
+            <Image 
+              alt="AI Assistant" 
+              className="size-7 rounded-full" 
+              height={28} 
+              width={28} 
+              src={iconSvg} 
+            />
           </div>
         )}
 
@@ -384,9 +391,15 @@ export const ThinkingMessage = () => {
       data-testid="message-assistant-loading"
     >
       <div className="flex items-start justify-start gap-3">
-        <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-md ring-2 ring-purple-200 dark:ring-purple-900">
+        <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-white shadow-md ring-2 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700">
           <div className="animate-pulse">
-            <SparklesIcon size={14} />
+            <Image 
+              alt="AI Assistant" 
+              className="size-7 rounded-full" 
+              height={28} 
+              width={28} 
+              src={iconSvg} 
+            />
           </div>
         </div>
 

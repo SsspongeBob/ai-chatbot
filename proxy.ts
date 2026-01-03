@@ -23,18 +23,24 @@ export async function proxy(request: NextRequest) {
     secureCookie: !isDevelopmentEnvironment,
   });
 
-  if (!token) {
-    const redirectUrl = encodeURIComponent(request.url);
-
-    return NextResponse.redirect(
-      new URL(`/api/auth/guest?redirectUrl=${redirectUrl}`, request.url)
-    );
+  // 允许访问登录和注册页面
+  if (["/login", "/register"].includes(pathname)) {
+    // 如果已经是认证用户（非游客），重定向到首页
+    if (token && !guestRegex.test(token?.email ?? "")) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+    return NextResponse.next();
   }
 
-  const isGuest = guestRegex.test(token?.email ?? "");
+  // 未认证用户重定向到登录页
+  if (!token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 
-  if (token && !isGuest && ["/login", "/register"].includes(pathname)) {
-    return NextResponse.redirect(new URL("/", request.url));
+  // 游客用户也重定向到登录页（强制要求真实用户认证）
+  const isGuest = guestRegex.test(token?.email ?? "");
+  if (isGuest) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();

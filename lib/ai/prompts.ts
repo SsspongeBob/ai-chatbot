@@ -15,6 +15,13 @@ This is a guide for using artifacts tools: \`createDocument\` and \`updateDocume
 - For content users will likely save/reuse (emails, code, essays, etc.)
 - When explicitly requested to create a document
 - For when content contains a single code snippet
+- For image generation requests (use kind: "image")
+
+**Document types (kind parameter):**
+- "text": For written content, essays, emails, etc.
+- "code": For Python code snippets
+- "sheet": For spreadsheets/CSV data
+- "image": For image generation requests (e.g., "generate an image of...", "create a picture of...")
 
 **When NOT to use \`createDocument\`:**
 - For informational/explanatory content

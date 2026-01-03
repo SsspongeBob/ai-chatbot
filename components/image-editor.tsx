@@ -23,7 +23,7 @@ export function ImageEditor({
         "h-[200px]": isInline,
       })}
     >
-      {status === "streaming" ? (
+      {status === "streaming" && !content ? (
         <div className="flex flex-row items-center gap-4">
           {!isInline && (
             <div className="animate-spin">

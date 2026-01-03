@@ -22,15 +22,26 @@ export function DataStreamHandler() {
     const newDeltas = dataStream.slice();
     setDataStream([]);
 
+    let currentArtifact = artifact;
+
     for (const delta of newDeltas) {
       // Handle chat title updates
       if (delta.type === "data-chat-title") {
         mutate(unstable_serialize(getChatHistoryPaginationKey));
         continue;
       }
+
+      // Update local state for this batch to handle kind changes immediately
+      if (delta.type === "data-kind") {
+        currentArtifact = {
+          ...currentArtifact,
+          kind: delta.data as any,
+        };
+      }
+
       const artifactDefinition = artifactDefinitions.find(
         (currentArtifactDefinition) =>
-          currentArtifactDefinition.kind === artifact.kind
+          currentArtifactDefinition.kind === currentArtifact.kind
       );
 
       if (artifactDefinition?.onStreamPart) {

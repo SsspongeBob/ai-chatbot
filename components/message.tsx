@@ -66,7 +66,7 @@ const PurePreviewMessage = ({
         })}
       >
         {message.role === "assistant" && (
-          <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
+          <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-md ring-2 ring-purple-200 dark:ring-purple-900">
             <SparklesIcon size={14} />
           </div>
         )}
@@ -125,15 +125,17 @@ const PurePreviewMessage = ({
                   <div key={key}>
                     <MessageContent
                       className={cn({
-                        "wrap-break-word w-fit rounded-2xl px-3 py-2 text-right text-white":
+                        "wrap-break-word w-fit rounded-2xl px-4 py-3 text-right text-white shadow-sm transition-shadow hover:shadow-md":
                           message.role === "user",
-                        "bg-transparent px-0 py-0 text-left":
+                        "rounded-xl bg-secondary/50 px-4 py-3.5 text-left backdrop-blur-sm":
                           message.role === "assistant",
                       })}
                       data-testid="message-content"
                       style={
                         message.role === "user"
-                          ? { backgroundColor: "#006cff" }
+                          ? { 
+                              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                            }
                           : undefined
                       }
                     >
@@ -382,14 +384,14 @@ export const ThinkingMessage = () => {
       data-testid="message-assistant-loading"
     >
       <div className="flex items-start justify-start gap-3">
-        <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
+        <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-md ring-2 ring-purple-200 dark:ring-purple-900">
           <div className="animate-pulse">
             <SparklesIcon size={14} />
           </div>
         </div>
 
         <div className="flex w-full flex-col gap-2 md:gap-4">
-          <div className="flex items-center gap-1 p-0 text-muted-foreground text-sm">
+          <div className="flex items-center gap-1 rounded-xl bg-secondary/50 px-4 py-3 text-muted-foreground text-sm backdrop-blur-sm">
             <span className="animate-pulse">Thinking</span>
             <span className="inline-flex">
               <span className="animate-bounce [animation-delay:0ms]">.</span>

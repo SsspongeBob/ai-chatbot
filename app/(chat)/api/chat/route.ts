@@ -179,20 +179,20 @@ export async function POST(request: Request) {
           experimental_activeTools: isReasoningModel
             ? []
             : [
-                "getWeather",
-                "createDocument",
-                "updateDocument",
-                "requestSuggestions",
-              ],
+              "getWeather",
+              "createDocument",
+              "updateDocument",
+              "requestSuggestions",
+            ],
           experimental_transform: isReasoningModel
             ? undefined
             : smoothStream({ chunking: "word" }),
           providerOptions: isReasoningModel
             ? {
-                anthropic: {
-                  thinking: { type: "enabled", budgetTokens: 10_000 },
-                },
-              }
+              anthropic: {
+                thinking: { type: "enabled", budgetTokens: 10_000 },
+              },
+            }
             : undefined,
           tools: {
             getWeather,
@@ -209,8 +209,7 @@ export async function POST(request: Request) {
           },
         });
 
-        result.consumeStream();
-
+        // Merge the result stream into the dataStream for streaming to client
         dataStream.merge(
           result.toUIMessageStream({
             sendReasoning: true,

@@ -1,4 +1,5 @@
 import { gateway } from "@ai-sdk/gateway";
+import type { ImageModel, LanguageModel } from "ai";
 import {
   customProvider,
   extractReasoningMiddleware,
@@ -10,21 +11,21 @@ const THINKING_SUFFIX_REGEX = /-thinking$/;
 
 export const myProvider = isTestEnvironment
   ? (() => {
-      const {
-        artifactModel,
-        chatModel,
-        reasoningModel,
-        titleModel,
-      } = require("./models.mock");
-      return customProvider({
-        languageModels: {
-          "chat-model": chatModel,
-          "chat-model-reasoning": reasoningModel,
-          "title-model": titleModel,
-          "artifact-model": artifactModel,
-        },
-      });
-    })()
+    const {
+      artifactModel,
+      chatModel,
+      reasoningModel,
+      titleModel,
+    } = require("./models.mock");
+    return customProvider({
+      languageModels: {
+        "chat-model": chatModel,
+        "chat-model-reasoning": reasoningModel,
+        "title-model": titleModel,
+        "artifact-model": artifactModel,
+      },
+    });
+  })()
   : null;
 
 export function getLanguageModel(modelId: string) {
@@ -59,4 +60,10 @@ export function getArtifactModel() {
     return myProvider.languageModel("artifact-model");
   }
   return gateway.languageModel("anthropic/claude-haiku-4.5");
+}
+
+export function getImageModel(modelId?: string): ImageModel {
+  // Image models don't work in test environment
+  // Use the specified model or default to bfl/flux-pro-1.1
+  return gateway.imageModel(modelId ?? "bfl/flux-pro-1.1");
 }

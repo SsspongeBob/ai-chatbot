@@ -8,8 +8,8 @@ import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chat.vercel.ai"),
-  title: "Educational Teaching Agent",
-  description: "Educational Teaching Agent.",
+  title: "智能教学助手",
+  description: "智能教学助手",
 };
 
 export const viewport = {
@@ -60,7 +60,7 @@ export default function RootLayout({
       // visual flicker before hydration. Hence the `suppressHydrationWarning`
       // prop is necessary to avoid the React hydration mismatch warning.
       // https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
-      lang="en"
+      lang="zh-CN"
       suppressHydrationWarning
     >
       <head>
